@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+ <img src="logo.png" 
+     alt="Логотип" 
+     style="width:100px; display:block; margin:auto;">
+  <div style="text-align: center;">
+<title>📘 Электронды журнал сүзгімен</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+  body {
+    font-family: "Segoe UI", sans-serif;
+    background: #f0f4f7;
+    margin: 0;
+    padding: 30px;
+  }
+  h2 {
+    text-align: center;
+    color: #2b8ec6;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    background: #fff;
+  }
+  thead tr:first-child th {
+    background: #2b8ec6;
+    color: #fff;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+  }
+  tbody td {
+    text-align: center;
+    padding: 8px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .filter-row th {
+    background: #e8f4fc;
+    padding: 6px;
+  }
+  input, select {
+    width: 95%;
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 13px;
+  }
+  button {
+    background: #2b8ec6;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 15px;
+    margin: 10px 0;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  button:hover { background: #2379aa; }
+</style>
+</head>
+<body>
+
+<h2>📘 Электронды журнал</h2>
+
+<div style="text-align:right;">
+  <button onclick="exportToExcel()">Журналды жүктеу</button>
+</div>
+
+<table id="journalTable">
+  <thead>
+    <tr>
+      <th>№</th>
+      <th>Аты-жөні</th>
+      <th>Тобы</th>
+      <th>Пән атауы</th>
+      <th>Оқытушы</th>
+      <th>Баға</th>
+      <th>Күні</th>
+    </tr>
+    <tr class="filter-row">
+      <th></th>
+      <th><input type="text" id="filterName" placeholder="Аты"></th>
+      <th>
+        <select id="filterGroup">
+          <option value="">Барлығы</option>
+          <option>Бк-220</option><option>Бк-221</option>
+          <option>Кт-205</option><option>Кт-220</option>
+          <option>И-220</option><option>И-215</option><option>И-205</option>
+          <option>МД-215</option><option>Шт-205</option><option>Шт-206</option>
+          <option>Ктх-215</option><option>Дт-205</option><option>Дт-207</option>
+        </select>
+      </th>
+      <th>
+        <select id="filterSubject">
+          <option value="">Барлығы</option>
+          <option>ОН 2.1 Ақпараттық коммуникациялық технологиялар негіздерін меңгеру</option>
+          <option>ОН 2.2 Ақпараттық-анықтамалық және интерактивті веб-порталдардың қызметтерін пайдалану</option>
+          <option>ОН 2.2 Дербес компьютер құралдарының жұмыс жасау принципін, программалық қамсыздандыру қызметін жүзеге асыру</option>
+          <option>ОН 3.4 Scratch программалау ортасында ойынды жобалау</option>
+          <option>Информатика</option>
+        </select>
+      </th>
+      <th><input type="text" id="filterTeacher" placeholder="Оқытушы"></th>
+      <th><input type="number" id="filterGrade" placeholder="≥ Баға"></th>
+      <th><input type="date" id="filterDate"></th>
+    </tr>
+  </thead>
+  <tbody id="journalBody"></tbody>
+</table>
+
+<script>
+// Жасанды мысал деректер
+const data = [
+  {name:"Бержанова Ақмерей", group:"Бк-220", subject:"Информатика", teacher:"Абылаев Ж.Н.", grade:93, date:"2025-11-01"},
+  {name:"Алдаберген Аружан", group:"Кт-205", subject:"ОН 2.1 Ақпараттық коммуникациялық технологиялар негіздерін меңгеру", teacher:"Абылаев Ж.Н.", grade:88, date:"2025-11-03"},
+  {name:"Аманова Еркежан", group:"Шт-206", subject:"ОН 2.2 Ақпараттық-анықтамалық және интерактивті веб-порталдардың қызметтерін пайдалану", teacher:"Абылаев Ж.Н.", grade:76, date:"2025-11-05"},
+  {name:"Аманқос Ақберен", group:"И-215", subject:"ОН 3.4 Scratch программалау ортасында ойынды жобалау", teacher:"Абылаев Ж.Н.", grade:91, date:"2025-11-06"},
+  {name:"Акимов Нұрдаулет", group:"И-220", subject:"ОН 2.2 Дербес компьютер құралдарының жұмыс жасау принципін, программалық қамсыздандыру қызметін жүзеге асыру", teacher:"Абылаев Ж.Н.", grade:84, date:"2025-11-02"},
+  {name:"Болатова Қамарсұлу", group:"Ктх-215", subject:"ОН 2.1 Ақпараттық коммуникациялық технологиялар негіздерін меңгеру", teacher:"Абылаев Ж.Н.", grade:87, date:"2025-11-04"},
+];
+
+function render() {
+  const tbody = document.getElementById("journalBody");
+  tbody.innerHTML = "";
+
+  const fName = document.getElementById("filterName").value.toLowerCase();
+  const fGroup = document.getElementById("filterGroup").value;
+  const fSubject = document.getElementById("filterSubject").value;
+  const fTeacher = document.getElementById("filterTeacher").value.toLowerCase();
+  const fGrade = document.getElementById("filterGrade").value;
+  const fDate = document.getElementById("filterDate").value;
+
+  const filtered = data.filter(r => {
+    if(fName && !r.name.toLowerCase().includes(fName)) return false;
+    if(fGroup && r.group !== fGroup) return false;
+    if(fSubject && r.subject !== fSubject) return false;
+    if(fTeacher && !r.teacher.toLowerCase().includes(fTeacher)) return false;
+    if(fGrade && r.grade < fGrade) return false;
+    if(fDate && r.date !== fDate) return false;
+    return true;
+  });
+
+  filtered.forEach((r, i) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${i+1}</td>
+      <td>${r.name}</td>
+      <td>${r.group}</td>
+      <td>${r.subject}</td>
+      <td>${r.teacher}</td>
+      <td>${r.grade}</td>
+      <td>${r.date}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+// Excel-ге экспорт
+function exportToExcel() {
+  const rows = [["№","Аты-жөні","Тобы","Пән атауы","Оқытушы","Баға","Күні"]];
+  const table = document.querySelectorAll("#journalBody tr");
+  table.forEach((row) => {
+    const cells = row.querySelectorAll("td");
+    rows.push(Array.from(cells).map(td => td.innerText));
+  });
+
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Журнал");
+  XLSX.writeFile(wb, "Электронды_журнал.xlsx");
+}
+
+// Барлық фильтрлерге event listener
+document.querySelectorAll(".filter-row input, .filter-row select").forEach(el => {
+  el.addEventListener("input", render);
+  el.addEventListener("change", render);
+});
+
+render();
+</script>
+
+</body>
+</html>

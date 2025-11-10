@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+ <img src="logo.png" 
+     alt="Логотип" 
+     style="width:140px; display:block; margin:auto;">
+  <div style="text-align: center;">
+  </div>
+    <div style="text-align: left;">
+<title>Тест — ОН 2.1 Ақпараттық коммуникациялық технологиялар</title>
+<style>
+  :root{--bg:#071126;--card:#071a2a;--accent:#00c3ff;--muted:#9fb6c6}
+  body{margin:0;font-family:Inter,Segoe UI,Arial;background:linear-gradient(180deg,#061025,#0b1420);color:#eaf6ff}
+  .wrap{max-width:1000px;margin:28px auto;padding:18px}
+  .card{background:rgba(3,12,20,0.85);border-radius:12px;padding:18px;box-shadow:0 12px 40px rgba(0,0,0,0.6)}
+  h1{color:var(--accent);margin:0 0 6px;font-size:22px}
+  p.lead{color:var(--muted);margin:0 0 14px}
+  .meta{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+  .timer{background:rgba(255,255,255,0.02);padding:8px 12px;border-radius:8px;color:var(--accent);font-weight:700}
+  .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-left:auto}
+  input[type=number], input[type=date], select{padding:6px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);color:#eaf6ff}
+  button.btn{background:var(--accent);color:#012;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:700}
+  button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted)}
+  .questions{margin-top:14px}
+  .q{background:rgba(255,255,255,0.02);padding:12px;border-radius:8px;margin-bottom:10px}
+  .q h3{margin:0 0 8px;font-size:15px}
+  .options{display:flex;flex-direction:column;gap:8px}
+  .opt label{display:flex;gap:10px;align-items:center;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+  .opt input[type=radio]{accent-color:var(--accent)}
+  .footer{display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:8px;flex-wrap:wrap}
+  .result{background:rgba(0,255,136,0.06);padding:12px;border-radius:8px;color:#ccffe6;display:none}
+  .review .correct{background:#0b3;color:#001b00;padding:6px 8px;border-radius:6px;font-weight:700}
+  .review .wrong{background:#c33;color:#fff;padding:6px 8px;border-radius:6px;font-weight:700}
+  @media (max-width:700px){.meta{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>ОН 2.1 — Тест: Ақпараттық коммуникациялық технологиялар негіздерін меңгеру</h1>
+      <p class="lead">Тест 25 сұрақтан тұрады. Уақыт — 25 минут. Уақыт аяқталса тест автоматты түрде тапсырылып, нәтиже көрсетіледі.</p>
+
+      <div class="meta">
+        <div id="userInfo">Пайдаланушы: <span id="userName">—</span></div>
+        <div class="timer">Қалған уақыт: <span id="timer">25:00</span></div>
+        <div class="controls">
+          <label>Уақыт (мин): <input id="timeLimit" type="number" value="25" min="1" style="width:80px"></label>
+          <button class="btn" id="startBtn">Тесті бастау</button>
+          <button class="btn ghost" id="resetBtn">Қайта жүктеу</button>
+        </div>
+      </div>
+
+      <div id="testArea" style="display:none">
+        <form id="quizForm" class="questions"></form>
+
+        <div class="footer">
+          <div>
+            <button class="btn" id="submitBtn">Жіберу</button>
+            <button class="btn ghost" id="showAnswersBtn" style="display:none">Жауаптарды көрсету</button>
+          </div>
+          <div id="statusText" style="color:var(--muted)"></div>
+        </div>
+
+        <div class="result" id="resultBox"></div>
+        <div id="reviewArea" class="review" style="margin-top:12px"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+/* ===== QUESTIONS: 25 complex, mixed-topic items =====
+ Each question: {id, text, options[], answer}
+ answer = index (0-based)
+*/
+const questions = [
+{ id:1, text:"Ақпараттық жүйе дегеніміз не?", options:[
+  "Тек аппараттық құралдардың жиынтығы",
+  "Деректерді жинау, сақтау, өңдеу және таратуға арналған құрылымдар мен процестер",
+  "Интернеттегі веб-сайттардың жиынтығы",
+  "Файлдарды сығу әдісі"
+], answer:1},
+
+{ id:2, text:"OSI модельінің қандай қабаты логикалық адресация (IP) қызметін қамтамасыз етеді?", options:[
+  "Қолданушы қабаты (Application)",
+  "Желі қабаты (Network)",
+  "Тасымалдау қабаты (Transport)",
+  "Физикалық қабат (Physical)"
+], answer:1},
+
+{ id:3, text:"HTTP пен HTTPS арасындағы басты айырмашылық қандай?", options:[
+  "HTTPS тек электронды почта хаттамасы",
+  "HTTPS деректерді TLS/SSL арқылы шифрлайды, HTTP - шифрламайды",
+  "HTTP жылдам жұмыс істемейді, HTTPS әрдайым жылдам",
+  "Ешқандай айырмашылық жоқ"
+], answer:1},
+
+{ id:4, text:"Операциялық жүйе не үшін ядро (kernel) арқылы негізгі қызмет көрсетеді?", options:[
+  "Пайдаланушы интерфейсін ғана көрсету үшін",
+  "Процестерді басқару, жедел жадты басқару және жүйелік қоңырауларды өңдеу үшін",
+  "Тек файлдарды сақтау үшін",
+  "Желілік кабельдерді конфигурациялау үшін"
+], answer:1},
+
+{ id:5, text:"IP-мекенжай (IPv4) форматындағы 192.168.1.0/24 нені білдіреді?", options:[
+  "Бір IP адрес және порт 24",
+  "Сетьтің префиксі 24 биттен тұратын 192.168.1.0 диапазоны (256 адрес)",
+  "IPv6 адресінің қысқартылған түрі",
+  "DNS жазбасының түрі"
+], answer:1},
+
+{ id:6, text:"DNS жүйесінің негізгі рөлі қандай?", options:[
+  "IP мекенжайынан MAC мекенжайын анықтау",
+  "Домен атауын адамға ыңғайлы мәтіннен IP-адреске аудару",
+  "Файлдарды тасымалдау",
+  "Құпиясөздерді сақтау"
+], answer:1},
+
+{ id:7, text:"Параллель алгоритмдерде синхронизацияның мақсаты неде?", options:[
+  "Барлық жіптерге бірдей жад бөлу",
+  "Ресурстарға бір уақытта кіруді үйлестіру және жарыс жағдайларын болдырмау",
+  "Жүйені тексеруді автоматтандыру",
+  "Файлдарды архивтеу"
+], answer:1},
+
+{ id:8, text:"SQL инъекциясына қарсы негізгі қорғаныс әдісі қандай?", options:[
+  "HTML кодын минимизациялау",
+  "Пайдаланушы енгізуін параметрленген сұраулар (prepared statements) арқылы өңдеу және тексеру",
+  "Серверді қайта жүктеу",
+  "Құжаттарды шифрлау"
+], answer:1},
+
+{ id:9, text:"IPv6-тың негізгі артықшылығы неде?", options:[
+  "Кішкене пакет өлшемі",
+  "Мекен-жай кеңістігінің үлкендігі және жетілдірілген авто-конфигурация мүмкіндігі",
+  "Құжаттарды тездетіп жүктеу",
+  "Тек жергілікті желілерге арналған"
+], answer:1},
+
+{ id:10, text:"Шифрлау симметриялық және асимметриялық болып бөлінеді. Асимметриялық шифрлаудың негізгі қолданылуы?", options:[
+  "Үлкен файлдарды жылдам сығу",
+  "Кілт алмасу, цифрлық қолтаңба және сенімділік қамтамасыз ету",
+  "Экран ажыратымдылығын арттыру",
+  "Деректер базасын индексациялау"
+], answer:1},
+
+{ id:11, text:"Операциялық жүйеде процестераралық коммуникация (IPC) не үшін қажет?", options:[
+  "Тек графикалық интерфейсті жасау үшін",
+  "Процестер арасында ақпарат алмасу және өзара әрекеттесу үшін",
+  "Желілік картаны конфигурациялау үшін",
+  "Файлдарды жүктеп алу үшін"
+], answer:1},
+
+{ id:12, text:"WHOIS қызметі не үшін пайдаланылады?", options:[
+  "Веб-беттердің мазмұнын талдау",
+  "Доменнің тіркелген иесін және контакт мәліметтерін анықтау",
+  "IP пакеттерін жылдам жіберу",
+  "Пайдаланушы сессиясын сақтау"
+], answer:1},
+
+{ id:13, text:"HTTP статустық коды 404 нені білдіреді?", options:[
+  "Сервердегі ішкі қате",
+  "Ресурс табылмады (Not Found)",
+  "Сұраныс табысты орындалды",
+  "Рұқсат жоқ"
+], answer:1},
+
+{ id:14, text:"Көптеген қорғаныс жүйелері үшін 'күшті құпиясөз' қандай талаптарға сай болуы тиіс?", options:[
+  "Тек 4 таңбадан тұруы керек",
+  "Ұзындығы жеткілікті, үлкен және кіші әріптерді, сандар және арнайы таңбаларды қамтуы керек",
+  "Тек әріптерден тұруы жеткілікті",
+  "Тек қайталанатын символдардан тұруы керек"
+], answer:1},
+
+{ id:15, text:"Клент-сервер архитектурасында кеш (cache) не үшін маңызды?", options:[
+  "Деректерді шифрлау үшін",
+  "Жиі сұралатын ресурстарды уақытша сақтау арқылы жауап уақытын төмендету",
+  "Серверлер арасындағы синхронизация енгізу",
+  "Пайдаланушыларды тіркеу"
+], answer:1},
+
+{ id:16, text:"VPN қызметі қандай жағдайда пайдалы?", options:[
+  "Тек жергілікті файлдарды ашу үшін",
+  "Қауіпсіз шифрланған канал арқылы интернетке қосылып, желілік трафикті қорғау қажет болғанда",
+  "Экран түсін өзгерту үшін",
+  "Принтерге қосылу үшін"
+], answer:1},
+
+{ id:17, text:"BAU және SLA терминдері ақпараттық жүйелерде нені білдіреді?", options:[
+  "BAU — бизнес-үрдістер, SLA — қызмет көрсету деңгейі",
+  "BAU — қауіпсіздік хаттамасы, SLA — желілік хаттама",
+  "BAU — дерекқор форматы, SLA — файл түрі",
+  "Екеуі де кодтау әдістері"
+], answer:0},
+
+{ id:18, text:"JSON Web Token (JWT) негізінен қай мақсатта қолданылады?", options:[
+  "Файлдарды сығу үшін",
+  "Аутентификация және ақпаратты сенімді түрде тасымалдау үшін",
+  "Желіні шифрлау үшін",
+  "Браузерді жаңарту үшін"
+], answer:1},
+
+{ id:19, text:"Арнайы 'salt' не үшін парольдерді сақтауда қажет?", options:[
+  "Парольдерді қысқарту үшін",
+  "Әр пайдаланушыға бірегей қосымша мән қосып, радикалдық жазбаларды (rainbow tables) қолданудың алдын алу",
+  "Парольдерді автоматты түрде өзгерту үшін",
+  "Тек локальді жүйелерде қолданылмайды"
+], answer:1},
+
+{ id:20, text:"OSI моделінде тасымалдау қабаты (Transport) қандай міндет атқарады?", options:[
+  "Физикалық кабельдерді басқару",
+  "Шынайы деректерді көрсету үшін UI элементтерін жасау",
+  "Өткізу сенімділігі, сегменттеу және порттар арқылы қосылыстарды қамтамасыз ету (мыс. TCP/UDP)",
+  "DNS аттарын шешу"
+], answer:2},
+
+{ id:21, text:"Резервтік көшіру стратегиясында 'RPO' және 'RTO' дегеніміз не?", options:[
+  "RPO — қалпына келтіру нүктесі, RTO — қалпына келтіру уақыты (мақсатты реттелімдер)",
+  "Екеуі де деректер шифрлау әдістері",
+  "RPO — тек аппараттық қате, RTO — желілік қателер",
+  "Осы терминдер жоқ"
+], answer:0},
+
+{ id:22, text:"HTTPS сессиясы кезінде серверден алынған сертификатты кім тексереді?", options:[
+  "Браузер (клиент) сертификаттың сенімді CA (certificate authority) арқылы берілгенін тексереді",
+  "Сервер өзі тексереді",
+  "Тек DNS жасайды",
+  "IP маршрутизатор тексереді"
+], answer:0},
+
+{ id:23, text:"'Two-factor authentication' (2FA) не үшін жақсы практика саналады?", options:[
+  "Қосымша сақтандыру қабатын береді — құпиясөз ғана жеткіліксіз болғанда қосымша фактор талап етеді",
+  "Пайдаланушы идентификаторын жасыру үшін",
+  "Файлдарды тез жіберу үшін",
+  "Экранды қорғайды"
+], answer:0},
+
+{ id:24, text:"Логирование және аудит жүйесі неге маңызды?", options:[
+  "Жүйе пайдаланушыларын автоматты түрде қосу үшін",
+  "Қорғаныс бұзушылықтарын анықтау, оқиғаларды талдау және сәйкестендіру үшін қажетті жазбаларды сақтау",
+  "Тек веб беттердің стилін басқару үшін",
+  "Файлдарды сығу үшін"
+], answer:1},
+
+{ id:25, text:"Электронды поштаның SPF, DKIM, DMARC жазбалары не үшін бірге қолданылады?", options:[
+  "Пошта серверін жылдамдату үшін",
+  "Жіберушіні жалғанан қорғап, спам мен фишингті азайту үшін бірлесіп жұмыс істейтін механизмдер",
+  "Файлдарды архивтеу үшін",
+  "Тек локальді жүйелерге қатысты"
+], answer:1}
+];
+
+/* ===== state and UI elements ===== */
+const SESSION_KEY = 'portal_current_user_v1';
+const GRADES_KEY = 'portal_grades_v1';
+const timeLimitInput = document.getElementById('timeLimit');
+const startBtn = document.getElementById('startBtn');
+const resetBtn = document.getElementById('resetBtn');
+const quizForm = document.getElementById('quizForm');
+const timerEl = document.getElementById('timer');
+const resultBox = document.getElementById('resultBox');
+const showAnswersBtn = document.getElementById('showAnswersBtn');
+const reviewArea = document.getElementById('reviewArea');
+const submitBtn = document.getElementById('submitBtn');
+const statusText = document.getElementById('statusText');
+
+let timerInterval = null;
+let remainingSeconds = 0;
+let started = false;
+
+/* check session */
+const me = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null');
+if(!me){
+  alert('Тесті тапсыру үшін порталда тіркеліп кіру қажет.');
+  window.location.href = 'index.html';
+} else {
+  document.getElementById('userName').textContent = me.fullname + (me.group ? ' / ' + me.group : '');
+}
+
+/* build form */
+questions.forEach((q, idx) => {
+  const div = document.createElement('div');
+  div.className = 'q';
+  const h = document.createElement('h3');
+  h.textContent = `${idx+1}. ${q.text}`;
+  div.appendChild(h);
+  const opts = document.createElement('div');
+  opts.className = 'options';
+  q.options.forEach((opt, oi) => {
+    const label = document.createElement('label');
+    label.className = 'opt';
+    const input = document.createElement('input');
+    input.type = 'radio';
+    input.name = 'q'+q.id;
+    input.value = oi;
+    input.disabled = true;
+    label.appendChild(input);
+    const span = document.createElement('span');
+    span.textContent = opt;
+    label.appendChild(span);
+    opts.appendChild(label);
+  });
+  div.appendChild(opts);
+  quizForm.appendChild(div);
+});
+
+/* timer functions */
+function fmtTime(sec){
+  const m = Math.floor(sec/60).toString().padStart(2,'0');
+  const s = (sec%60).toString().padStart(2,'0');
+  return `${m}:${s}`;
+}
+function startTimer(minutes){
+  remainingSeconds = minutes*60;
+  timerEl.textContent = fmtTime(remainingSeconds);
+  timerInterval = setInterval(()=>{
+    remainingSeconds--;
+    timerEl.textContent = fmtTime(remainingSeconds);
+    if(remainingSeconds <= 0){
+      clearInterval(timerInterval);
+      finishTest(true);
+    }
+  },1000);
+}
+
+/* start/reset handlers */
+startBtn.addEventListener('click', ()=>{
+  if(started) return;
+  const mins = parseInt(timeLimitInput.value) || 25;
+  startTest(mins);
+});
+resetBtn.addEventListener('click', ()=> {
+  if(confirm('Тесті қайта бастау — барлық таңдалған жауаптар жойылады. Жалғастырғыңыз келе ме?')) location.reload();
+});
+
+function startTest(mins){
+  started = true;
+  document.getElementById('testArea').style.display = 'block';
+  document.querySelectorAll('input[type=radio]').forEach(r=>r.disabled=false);
+  startBtn.disabled = true;
+  timeLimitInput.disabled = true;
+  statusText.textContent = 'Тест басталды. Уақыт есептелуде.';
+  startTimer(mins);
+}
+
+/* submit and scoring */
+submitBtn.addEventListener('click', ()=> finishTest(false));
+
+function finishTest(byTimeout=false){
+  if(timerInterval) clearInterval(timerInterval);
+  // collect
+  let correct = 0;
+  const answers = [];
+  questions.forEach(q=>{
+    const sel = document.querySelector(`input[name=q${q.id}]:checked`);
+    const val = sel ? Number(sel.value) : null;
+    answers.push({id:q.id, chosen: val});
+    if(val === q.answer) correct++;
+  });
+  const scorePercent = Math.round(100 * correct / questions.length);
+  // save result to portal grades
+  const grades = JSON.parse(localStorage.getItem(GRADES_KEY) || '[]');
+  const today = new Date().toISOString().slice(0,10);
+  grades.push({
+    name: me.fullname,
+    group: me.group || '',
+    spec: 'ОН 2.1 Ақпараттық коммуникациялық технологиялар негіздерін меңгеру',
+    subject: 'ОН 2.1',
+    date: today,
+    teacher: 'Авто-бағалау',
+    grade: scorePercent
+  });
+  localStorage.setItem(GRADES_KEY, JSON.stringify(grades));
+  // show result
+  resultBox.style.display = 'block';
+  resultBox.innerHTML = `<strong>Нәтиже:</strong> ${correct}/${questions.length} — ${scorePercent}% ${byTimeout ? '(Уақыт аяқталды)' : ''}`;
+  document.querySelectorAll('input[type=radio]').forEach(r=>r.disabled=true);
+  submitBtn.disabled = true;
+  showAnswersBtn.style.display = 'inline-block';
+  statusText.textContent = 'Тапсырылды. Нәтиже сақталды.';
+  showAnswersBtn.onclick = showAnswers;
+}
+
+/* review */
+function showAnswers(){
+  reviewArea.innerHTML = '<h3>Жауаптарды тексеру</h3>';
+  questions.forEach((q,idx)=>{
+    const block = document.createElement('div');
+    block.style.background = 'rgba(0,0,0,0.4)';
+    block.style.padding = '8px';
+    block.style.borderRadius = '8px';
+    block.style.margin = '8px 0';
+    const qh = document.createElement('div');
+    qh.innerHTML = `<b>${idx+1}. ${q.text}</b>`;
+    block.appendChild(qh);
+    q.options.forEach((opt,oi)=>{
+      const div = document.createElement('div');
+      div.style.padding='6px';
+      if(oi === q.answer){
+        div.innerHTML = `✅ ${opt}`;
+        div.style.background = 'rgba(0,200,0,0.06)';
+        div.style.borderLeft='4px solid #0b3';
+      } else {
+        div.innerHTML = `&nbsp;&nbsp;${opt}`;
+      }
+      const sel = document.querySelector(`input[name=q${q.id}]:checked`);
+      const userChoice = sel ? Number(sel.value) : null;
+      if(userChoice === oi && oi !== q.answer){
+        div.innerHTML += ' — <span style="color:#ff9b9b;font-weight:700">Сіздің таңдауыңыз</span>';
+        div.style.background = 'rgba(200,0,0,0.05)';
+        div.style.borderLeft='4px solid #c33';
+      } else if(userChoice === oi && oi === q.answer) {
+        div.innerHTML += ' — <span style="color:#baffd6;font-weight:700">Дұрыс таңдауыңыз</span>';
+      }
+      block.appendChild(div);
+    });
+    reviewArea.appendChild(block);
+  });
+  reviewArea.scrollIntoView({behavior:'smooth'});
+}
+
+/* optional export last result */
+function exportLastResult(){
+  const grades = JSON.parse(localStorage.getItem(GRADES_KEY) || '[]');
+  if(!grades.length){ alert('Нәтиже жоқ'); return; }
+  const last = grades[grades.length-1];
+  const rows = [["Аты-жөні","Тобы","Пән","Күні","Баға"], [last.name, last.group, last.subject, last.date, last.grade]];
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Нәтиже");
+  XLSX.writeFile(wb, `Нәтиже_${last.name.replace(/\s+/g,'_')}.xlsx`);
+}
+
+/* Initially hide test area until start */
+document.getElementById('testArea').style.display = 'block'; // visible so teacher can see; inputs disabled until start
+document.querySelectorAll('input[type=radio]').forEach(r=>r.disabled=true);
+statusText.textContent = 'Уақытты енгізіп, "Тесті бастау" басыңыз.';
+
+</script>
+</body>
+</html>

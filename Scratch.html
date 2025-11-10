@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Электронды оқулық - Информатика</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+          --primary-color: #2c3e50;
+          --secondary-color: #3498db;
+          --accent-color: #e74c3c;
+          --light-color: #ecf0f1;
+          --dark-color: #2c3e50;
+        }
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          line-height: 1.6;
+          background-color: #f9f9f9;
+          color: #333;
+        }
+
+        header {
+          background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+          color: white;
+          padding: 2rem 0;
+          text-align: center;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+        }
+
+        nav {
+          background-color: var(--dark-color);
+          position: sticky;
+          top: 0;
+          z-index: 100;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 20px;
+        }
+
+        .logo {
+          color: white;
+          font-weight: bold;
+          font-size: 1.2rem;
+        }
+
+        .nav-links {
+          display: flex;
+          list-style: none;
+        }
+
+        .nav-links a {
+          color: white;
+          text-decoration: none;
+          padding: 1rem;
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+        }
+
+        .nav-links a:hover {
+          background-color: var(--secondary-color);
+          color: white;
+        }
+
+        .nav-links a i {
+          margin-right: 8px;
+        }
+
+        main {
+          max-width: 1200px;
+          margin: 2rem auto;
+          padding: 0 20px;
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        @media (min-width: 992px) {
+          main {
+            grid-template-columns: 3fr 1fr;
+          }
+        }
+
+        .content-section {
+          background: white;
+          border-radius: 8px;
+          padding: 2rem;
+          box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+          transition: transform 0.3s ease;
+        }
+
+        .content-section:hover {
+          transform: translateY(-5px);
+        }
+
+        .sidebar {
+          background: white;
+          border-radius: 8px;
+          padding: 1.5rem;
+          box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+          height: fit-content;
+          position: sticky;
+          top: 80px;
+        }
+
+        h1, h2, h3, h4 {
+          color: var(--primary-color);
+          margin-bottom: 1rem;
+        }
+
+        h1 {
+          font-size: 2.5rem;
+          margin-bottom: 0.5rem;
+        }
+
+        h2 {
+          font-size: 1.8rem;
+          border-bottom: 2px solid var(--secondary-color);
+          padding-bottom: 0.5rem;
+          margin-bottom: 1.5rem;
+        }
+
+        h3 {
+          font-size: 1.4rem;
+          color: var(--secondary-color);
+          margin-top: 1.5rem;
+        }
+
+        p {
+          margin-bottom: 1rem;
+        }
+
+        ul, ol {
+          margin-left: 1.5rem;
+          margin-bottom: 1rem;
+        }
+
+        li {
+          margin-bottom: 0.5rem;
+        }
+
+        a {
+          color: var(--secondary-color);
+          text-decoration: none;
+        }
+
+        a:hover {
+          color: var(--accent-color);
+          text-decoration: underline;
+        }
+
+        .btn {
+          display: inline-block;
+          background-color: var(--secondary-color);
+          color: white;
+          padding: 0.6rem 1.2rem;
+          border-radius: 4px;
+          border: none;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          font-size: 1rem;
+          margin-top: 0.5rem;
+        }
+
+        .btn:hover {
+          background-color: var(--primary-color);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          text-decoration: none;
+        }
+
+        .btn-accent {
+          background-color: var(--accent-color);
+        }
+
+        .btn-accent:hover {
+          background-color: #c0392b;
+        }
+
+        .code-block {
+          background-color: #f5f5f5;
+          padding: 1rem;
+          border-radius: 4px;
+          font-family: 'Courier New', Courier, monospace;
+          margin: 1rem 0;
+          overflow-x: auto;
+        }
+
+        .card {
+          background: white;
+          border-radius: 8px;
+          padding: 1.5rem;
+          margin-bottom: 1.5rem;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+          transition: all 0.3s ease;
+        }
+
+        .card:hover {
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+          transform: translateY(-3px);
+        }
+
+        .card h3 {
+          margin-top: 0;
+        }
+
+        .topic-list {
+          list-style: none;
+        }
+
+        .topic-list li {
+          margin-bottom: 0.8rem;
+          padding-bottom: 0.8rem;
+          border-bottom: 1px solid #eee;
+        }
+
+        .topic-list li:last-child {
+          border-bottom: none;
+        }
+
+        .topic-list a {
+          display: flex;
+          align-items: center;
+          color: var(--dark-color);
+        }
+
+        .topic-list a:hover {
+          color: var(--secondary-color);
+        }
+
+        .topic-list i {
+          margin-right: 10px;
+          color: var(--secondary-color);
+        }
+
+        footer {
+          background-color: var(--dark-color);
+          color: white;
+          text-align: center;
+          padding: 2rem 0;
+          margin-top: 3rem;
+        }
+
+        .footer-content {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 2rem;
+          text-align: left;
+        }
+
+        .footer-section h3 {
+          color: white;
+          margin-bottom: 1.5rem;
+          font-size: 1.2rem;
+        }
+
+        .footer-section ul {
+          list-style: none;
+        }
+
+        .footer-section ul li {
+          margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+          color: #bbb;
+        }
+
+        .footer-section a:hover {
+          color: white;
+        }
+
+        .social-links {
+          display: flex;
+          gap: 1rem;
+          margin-top: 1rem;
+        }
+
+        .social-links a {
+          color: white;
+          background-color: var(--secondary-color);
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+          background-color: var(--accent-color);
+          transform: translateY(-3px);
+        }
+
+        .copyright {
+          text-align: center;
+          padding-top: 2rem;
+          margin-top: 2rem;
+          border-top: 1px solid #444;
+          color: #bbb;
+          font-size: 0.9rem;
+        }
+
+        /* Адаптивтік дизайн */
+        @media (max-width: 768px) {
+          .nav-container {
+            flex-direction: column;
+            padding: 1rem;
+          }
+
+          .nav-links {
+            margin-top: 1rem;
+            width: 100%;
+            justify-content: space-around;
+          }
+
+          .nav-links a {
+            padding: 0.5rem;
+            font-size: 0.9rem;
+          }
+
+          h1 {
+            font-size: 2rem;
+          }
+
+          .content-section, .sidebar {
+            padding: 1.5rem;
+          }
+        }
+
+        /* Анимациялар */
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animated {
+          animation: fadeIn 0.6s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+
+        /* Прогресс бар */
+        .progress-container {
+          width: 100%;
+          background-color: #f1f1f1;
+          border-radius: 4px;
+          margin: 1rem 0;
+        }
+
+        .progress-bar {
+          height: 8px;
+          background-color: var(--secondary-color);
+          border-radius: 4px;
+          width: 0%;
+          transition: width 0.5s ease;
+        }
+
+        /* Модальды терезe */
+        .modal {
+          display: none;
+          position: fixed;
+          z-index: 1000;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0,0,0,0.7);
+          overflow: auto;
+        }
+
+        .modal-content {
+          background-color: white;
+          margin: 10% auto;
+          padding: 2rem;
+          border-radius: 8px;
+          width: 80%;
+          max-width: 600px;
+          box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+          position: relative;
+        }
+
+        .close-btn {
+          position: absolute;
+          top: 15px;
+          right: 15px;
+          font-size: 1.5rem;
+          cursor: pointer;
+          color: #777;
+        }
+
+        .close-btn:hover {
+          color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+<<header class="animated">
+    <div class="header-content">
+      <div style="text-align: right;">
+   <a href="index.html"><font color="white"><i class="fa-solid fa-right-from-bracket"></i>Шығу</button></i></a></font></p>
+   <img src="logo.png" 
+     alt="Логотип" 
+     style="width:170px; display:block; margin:auto;">
+  <div style="text-align: center;">
+        <h1>Информатика пәні бойынша электронды оқу порталы</h1>
+      <p> <b>Ақтөбе жоғары гуманитарлық колледжі</b></p>  
+  <div style="text-align: center;">
+  </div>
+</header>
+
+<nav>
+    <div class="nav-container">
+        <div class="logo">Теориялық бөлім</div>
+                <li><a href="basy.html"><i class="fas fa-home"></i> Басты бет</a></li>
+            <li><a href="Mazmuny.html"><i class="fas fa-book"></i> Мазмұны</a></li>
+            <li><a href="Teoria.html"><i class="fas fa-book"></i> Теория</a></li>
+            <li><a href="dop.html"><i class="fa-solid fa-chalkboard-user"></i></i> Қосымша</a></li>
+            <li role="none"><a role="menuitem" href="keste.html"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i> Cабақ кестесі</a></li>
+          <li><a href="https://docs.google.com/spreadsheets/d/1gsCUjFFA1EsXRXcgmnp5ZFW4BAkTVCfnuyVGnUvEEMU/edit?usp=sharing"><i class="fas fa-envelope"></i> Кері байланыс</a></li>
+          <li role="none"><a role="menuitem" href="journal.html"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i>Журнал</a></li>
+      <li><a href="test.html"></i></i>Қорытынды тест</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+    <div class="content">
+        <section id="home" class="content-section animated">
+            <h2>Теориялық материалдар</h2>
+            <div class="card animated delay-1">
+                <h3>Тақырыптар:</h3>
+                <ul>
+<li><b><i class="fas fa-check-circle" style="color: #2ecc71;"></i> І бөлім.Кіріспе</b></li>
+		    <p>1.1 Қауіпсіздік техникасы және жұмыс орнын ұйымдастыру.</p> <button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1bk7rfUGYp3j5vYlPqPIOf4Px9mzVn9ee/view?usp=drive_link"><font color="white"><download>жүктеу</button></i></a></font></p>
+                    <p>1.2 «Компьютерлік ойындардың шығу тарихы» тақырыбына презентациялық жоба.</p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1rv1WW9MWWt8goNuXVj5gJ66QB5LlE7Iw/view?usp=drive_link"><font color="white"><download>жүктеу</button></i></a></font></p>
+          <li><b><i class="fas fa-check-circle" style="color: #2ecc71;"></i> ІІ бөлім.Scratch негіздері және алғашқы қадамдар</b></li>
+		    <p>2.1 Scratch ортасына кіріспе. Спрайттар және сахна.</p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1DNJiwBSLrnxW3tdLOaaPPdI0slPgXRFE/view?usp=drive_link"><font color="white"><download>жүктеу</button></i></a></font></p>
+          <p>2.2 Қозғалыс блоктары.</p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1DNJiwBSLrnxW3tdLOaaPPdI0slPgXRFE/view?usp=drive_link"><font color="white"><download>жүктеу</button></i></a></font></p>
+            <p>2.3 Анимация негіздері және дыбыс.</p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1DNJiwBSLrnxW3tdLOaaPPdI0slPgXRFE/view?usp=drive_link"><font color="white"><download>жүктеу</button></i></a></font></p>
+              <p>2.4 Диалог және қарапайым мультфильм жасау.</p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1DNJiwBSLrnxW3tdLOaaPPdI0slPgXRFE/view?usp=drive_link"><font color="white"><download>жүктеу</button></i></a></font></p>
+          <li><b><i class="fas fa-check-circle" style="color: #2ecc71;"></i> ІII бөлім.Оқиғалар және басқару элементтері</b></li>
+		    <p>3.1 Оқиғалар – Скрипттерді іске қосу.</p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1SH7eDF3FI9yr7IwYa4icIx9F3P-IKRWv/view?usp=drive_link"><font color="white"><download>жүктеу</button></i></a></font></p>
+                    <p>3.2 Циклдер (Loops) .</p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1v3d-rqvMqcjAp7aLvs1-Ein8uw_z3zeG/view?usp=drive_link"><font color="white"><download>жүктеу</button></i></a></font></p>
+                      <p>3.3 Шарттар (If / Else) .</p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1v3d-rqvMqcjAp7aLvs1-Ein8uw_z3zeG/view?usp=drive_link"><font color="white"><download>жүктеу</button></i></a></font></p>
+                        <p>3.4 Күрделі шарттар .</p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1v3d-rqvMqcjAp7aLvs1-Ein8uw_z3zeG/view?usp=drive_link"><font color="white"><download>жүктеу</button></i></a></font></p>
+                          <p>3.5 Хабар жіберу және оқиғаларды байланыстыру.</p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1v3d-rqvMqcjAp7aLvs1-Ein8uw_z3zeG/view?usp=drive_link"><font color="white"><download>жүктеу</button></i></a></font></p>
+                            <p>3.6 Клондау .</p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1v3d-rqvMqcjAp7aLvs1-Ein8uw_z3zeG/view?usp=drive_link"><font color="white"><download>жүктеу</button></i></a></font></p>
+            <li><b><i class="fas fa-check-circle" style="color: #2ecc71;"></i> IV бөлім.Программалау негіздері.</b></li>
+		    <p>4.1  Операторлар.</p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1QD-rogEgr5WhQTdUbhfWk-DquDdDyVdU/view?usp=drive_link"><font color="white"><download>жүктеу</button></i></a></font></p>
+                    <p>4.2 Сенсорлар.</p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1QD-rogEgr5WhQTdUbhfWk-DquDdDyVdU/view?usp=drive_link"><font color="white"><download>жүктеу</button></i></a></font></p>
+                       <p>4.3 Айнымалылар.</p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1QD-rogEgr5WhQTdUbhfWk-DquDdDyVdU/view?usp=drive_link"><font color="white"><download>жүктеу</button></i></a></font></p>
+                         <p>4.4 Абстракция (My Blocks / Функциялар).</p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1QD-rogEgr5WhQTdUbhfWk-DquDdDyVdU/view?usp=drive_link"><font color="white"><download>жүктеу</button></i></a></font></p>
+          <li><b><i class="fas fa-check-circle" style="color: #2ecc71;"></i> V бөлім.Интерактивті ойындар мен анимациялық жобалар</b></li>
+		    <p>5.1 Музыка және дыбыстарды қолдану.</p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1tckfDM55Vs9H8UurCLgqTORSAfpI5A-0/view?usp=drive_linkk"><font color="white"><download>жүктеу</button></i></a></font></p>
+                    <p>5.2 Сурет салу (Pen Extension).</p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1PDRZfsOmibIwWfXzAgxcEUmB5TBl_KgS/view?usp=drive_link"><font color="white"><download>жүктеу</button></i></a></font></p>
+                    <p>5.3 Лабиринт ойыны(Maze Game). </p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1PDRZfsOmibIwWfXzAgxcEUmB5TBl_KgS/view?usp=drive_link"><font color="white"><download>жүктеу</button></i></a></font></p>
+                      <p>5.4 Ғарыштағы шайқас ойыны (Space Battle).</p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1PDRZfsOmibIwWfXzAgxcEUmB5TBl_KgS/view?usp=drive_link"><font color="white"><download>жүктеу</button></i></a></font></p>
+	     <li><b><i class="fas fa-check-circle" style="color: #2ecc71;"></i> VІ бөлім.Шығармашылқ жоба.</b></li>
+		    <p>6.1 Жобаны жоспарлау.</p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1h9rEw6DO_xVgLfwD4IYe0NdLUxLLtua0/view?usp=drive_link"><font color="white"><download>жүктеу</button></i></a></font></p>
+          <p>6.2 Прототип құрастыру.</p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1h9rEw6DO_xVgLfwD4IYe0NdLUxLLtua0/view?usp=drive_link"><font color="white"><download>жүктеу</button></i></a></font></p>
+            <p>6.3 Жобаны жасау.</p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1h9rEw6DO_xVgLfwD4IYe0NdLUxLLtua0/view?usp=drive_link"><font color="white"><download>жүктеу</button></i></a></font></p>
+              <p>6.4 Жобаны аяқтау: Жетілдіру, тестілеу.</p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1h9rEw6DO_xVgLfwD4IYe0NdLUxLLtua0/view?usp=drive_link"><font color="white"><download>жүктеу</button></i></a></font></p>
+                <p>6.5 Жобаны қорғау.</p><button class="btn animated delay-3" onclick="startLearning()"><a href="https://drive.google.com/file/d/1h9rEw6DO_xVgLfwD4IYe0NdLUxLLtua0/view?usp=drive_link">
+                 <button class="btn animated delay-3" onclick="startLearning()"><a href="obr.html"><font color="white"><download>Тапсырма жүктеу</button></i></a></font></p> 	   
+	    </ul>
+            </div>
+                      <button class="btn animated delay-3" onclick="startLearning()"><a href="Basty bet.html"><i class="fas fa-home"></i>Кері</a></button>
+        </section>
+                </ul>
+            </div>
+        </section>
+</script>
+</body>
+</html>

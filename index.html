@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Электронды оқу порталы — Ақтөбе жоғары гуманитарлық колледжі</title>
+<style>
+  body {
+    font-family: "Segoe UI", sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('https://images.unsplash.com/photo-1581091215367-59ab6c2a1e82?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .container {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 0 25px rgba(0,0,0,0.4);
+  }
+  h1 {
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 25px;
+    color: #00c3ff;
+  }
+  .btn-select {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  button {
+    background: #00aaff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  button:hover {
+    background: #0080cc;
+  }
+  .form {
+    display: none;
+  }
+  input, select {
+    width: 100%;
+    padding: 10px;
+    margin: 6px 0;
+    border-radius: 6px;
+    border: none;
+    font-size: 15px;
+  }
+  label {
+    font-size: 14px;
+  }
+  #studentFields { display: none; }
+  .back-btn {
+    background: #ff5252;
+    margin-top: 10px;
+  }
+  .message {
+    text-align: center;
+    color: #00ff88;
+    margin-top: 5px;
+    font-size: 14px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div style="text-align: center;">
+    <img src="logo.png" alt="Логотип" style="height:100px; margin:20px auto; display:block;">
+  </div>
+  <h1>Электронды оқу порталы<br>Ақтөбе жоғары гуманитарлық колледжі</h1>
+  <div class="btn-select">
+    <button onclick="showForm('login')">Кіру</button>
+    <button onclick="showForm('register')">Тіркелу</button>
+  </div>
+
+  <!-- Кіру формасы -->
+  <div id="loginForm" class="form">
+    <label>Email:</label>
+    <input id="login_email" placeholder="Пайдаланушы email">
+    <label>Құпиясөз:</label>
+    <input id="login_password" type="password" placeholder="Құпиясөз">
+    <button onclick="loginUser()">Кіру</button>
+    <div class="message" id="login_status"></div>
+    <button class="back-btn" onclick="hideForms()">Артқа</button>
+  </div>
+
+  <!-- Тіркелу формасы -->
+  <div id="registerForm" class="form">
+    <label>Толық аты-жөні:</label>
+    <input id="reg_fullname" placeholder="Мысалы: Аманова Еркежан">
+    <label>Email:</label>
+    <input id="reg_email" placeholder="Email (логин)">
+    <label>Құпиясөз:</label>
+    <input id="reg_password" type="password" placeholder="Құпиясөз">
+    <label>Телефон:</label>
+    <input id="reg_phone" placeholder="Мысалы: +7 700 123 45 67">
+    <label>Рөлі:</label>
+    <select id="reg_role" onchange="toggleStudentFields()">
+      <option value="">-- Рөлді таңдаңыз --</option>
+      <option value="student">Білім алушы</option>
+      <option value="teacher">Оқытушы</option>
+    </select>
+
+    <div id="studentFields">
+      <label>Мамандық:</label>
+      <select id="reg_specialty">
+        <option value="">-- Мамандықты таңдаңыз --</option>
+        <option>Мектепке дейінгі, бастауыш және негізгі орта білім берудің музыка мұғалімі</option>
+        <option>Дене тәрбиесі мұғалімі</option>
+        <option>Бастауыш білім беру мұғалімі</option>
+        <option>Қазақ тілі мен әдебиеті мұғалімі</option>
+        <option>Шетел тілі мұғалімі</option>
+        <option>Мектепке дейінгі тәрбие және оқыту ұйымдарының тәрбиешісі</option>
+        <option>Педагог-ұйымдастырушы</option>
+        <option>Бастауыш және негізгі орта білім берудің информатика мұғалімі</option>
+        <option>Көркемөнерпаздар хореографиялық ұжымының жетекшісі, оқытушы</option>
+        <option>Кітапханашы</option>
+      </select>
+
+      <label>Тобы:</label>
+      <select id="reg_group">
+        <option value="">-- Топты таңдаңыз --</option>
+        <option>Бк-220</option><option>Бк-221</option><option>И-220</option>
+        <option>И-215</option><option>И-205</option><option>Кт-220</option>
+        <option>Кт-205</option><option>Шт-205</option><option>Шт-206</option>
+        <option>МД-215</option><option>Ктх-215</option><option>Дт-205</option><option>Дт-207</option>
+      </select>
+    </div>
+
+    <button onclick="registerUser()">Тіркелу</button>
+    <div class="message" id="reg_status"></div>
+    <button class="back-btn" onclick="hideForms()">Артқа</button>
+  </div>
+</div>
+
+<script>
+const SESSION_KEY = 'portal_current_user_v1';
+
+function showForm(type){
+  document.getElementById('loginForm').style.display = (type==='login')?'block':'none';
+  document.getElementById('registerForm').style.display = (type==='register')?'block':'none';
+}
+function hideForms(){
+  document.getElementById('loginForm').style.display = 'none';
+  document.getElementById('registerForm').style.display = 'none';
+}
+function toggleStudentFields(){
+  const role = document.getElementById('reg_role').value;
+  document.getElementById('studentFields').style.display = (role==='student')?'block':'none';
+}
+
+// ------------------- Register AJAX -------------------
+async function registerUser(){
+  const data = {
+    fullname: reg_fullname.value.trim(),
+    email: reg_email.value.trim().toLowerCase(),
+    password: reg_password.value,
+    phone: reg_phone.value.trim(),
+    role: reg_role.value,
+    specialty: reg_role.value==='student'?reg_specialty.value:'',
+    group: reg_role.value==='student'?reg_group.value:''
+  };
+
+  if(!data.fullname||!data.email||!data.password||!data.role){
+    reg_status.textContent='Барлық міндетті өрістерді толтырыңыз!';
+    reg_status.style.color='#ff5252'; return;
+  }
+  if(data.role==='student'&&(!data.specialty||!data.group)){
+    reg_status.textContent='Білім алушы үшін мамандық пен топты таңдаңыз!';
+    reg_status.style.color='#ff5252'; return;
+  }
+
+  try{
+    const res = await fetch('http://localhost:3000/register',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(data)
+    });
+    const text = await res.text();
+    reg_status.textContent=text;
+    reg_status.style.color=res.ok?'#00ff88':'#ff5252';
+    if(res.ok){
+      reg_fullname.value=reg_email.value=reg_password.value=reg_phone.value='';
+      reg_role.value=''; toggleStudentFields();
+    }
+  } catch(err){
+    reg_status.textContent='Серверге қосылу қатесі!';
+    reg_status.style.color='#ff5252';
+  }
+}
+
+// ------------------- Login AJAX -------------------
+async function loginUser(){
+  const data = {
+    email: login_email.value.trim().toLowerCase(),
+    password: login_password.value
+  };
+  try{
+    const res = await fetch('http://localhost:3000/login',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify(data)
+    });
+    if(res.ok){
+      const json=await res.json();
+      localStorage.setItem(SESSION_KEY,JSON.stringify(json.user));
+      login_status.textContent=json.message;
+      login_status.style.color='#00ff88';
+      setTimeout(()=>window.location.href='basy.html',600);
+    } else {
+      const errorText=await res.text();
+      login_status.textContent=errorText;
+      login_status.style.color='#ff5252';
+    }
+  } catch(err){
+    login_status.textContent='Серверге қосылу қатесі!';
+    login_status.style.color='#ff5252';
+  }
+}
+</script>
+</body>
+</html>

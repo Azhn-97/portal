@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT Дәріс – Ақпараттық технологиялар негіздері</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-color: #0077b6;
+      --secondary-color: #00b4d8;
+      --accent-color: #0096c7;
+      --text-color: #023e8a;
+      --light-bg: rgba(255, 255, 255, 0.8);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-image: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: var(--text-color);
+      line-height: 1.7;
+    }
+
+    header {
+      background: linear-gradient(135deg, rgba(0, 119, 182, 0.9), rgba(0, 180, 216, 0.9));
+      text-align: center;
+      padding: 3rem 1rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      border-bottom: 3px solid #00b4d8;
+      color: white;
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      color: #ffffff;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    }
+
+    header p {
+      font-size: 1.2rem;
+      margin-top: 0.6rem;
+      font-weight: bold;
+    }
+
+    nav {
+      background-color: rgba(255, 255, 255, 0.95);
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 1rem 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    nav a {
+      color: var(--primary-color);
+      text-decoration: none;
+      margin: 0.5rem 1rem;
+      padding: 0.6rem 1rem;
+      border-radius: 5px;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      background-color: var(--secondary-color);
+      color: #fff;
+      transform: translateY(-3px);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 3rem auto;
+      background: var(--light-bg);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(6px);
+    }
+
+    h2 {
+      color: var(--primary-color);
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      border-bottom: 2px solid var(--secondary-color);
+      padding-bottom: 0.5rem;
+    }
+
+    p {
+      margin-bottom: 1rem;
+      color: #023047;
+    }
+
+    .lecture-block {
+      margin-bottom: 2rem;
+    }
+
+    .lecture-block h3 {
+      color: var(--accent-color);
+      border-left: 4px solid var(--secondary-color);
+      padding-left: 10px;
+      margin-bottom: 0.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.6rem 1.2rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background-color: var(--accent-color);
+      transform: translateY(-3px);
+    }
+
+    footer {
+      background-color: rgba(255, 255, 255, 0.95);
+      color: var(--text-color);
+      text-align: center;
+      padding: 2rem 0;
+      margin-top: 3rem;
+      border-top: 2px solid var(--secondary-color);
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    }
+
+    footer p {
+      font-size: 0.9rem;
+      color: var(--text-color);
+    }
+
+  </style>
+</head>
+
+<body>
+  <header>
+    <img src="logo.png" 
+     alt="Логотип" 
+     style="width:170px; display:block; margin:auto;">
+    <h1>Қарастырылатын пән,модульдер:</h1>
+    <p>Ақтөбе жоғары гуманитарлық колледжі</p>
+  </header>
+
+  <nav>
+     <li role="none"><a role="menuitem" class="active" href="basy.html"><i class="fas fa-home" aria-hidden="true"></i> Басты бет</a></li>
+          <li role="none"><a role="menuitem" href="Mazmuny.html"><i class="fas fa-book" aria-hidden="true"></i> Мазмұны</a></li>
+          <li role="none"><a role="menuitem" href="Teoria.html"><i class="fas fa-book-open" aria-hidden="true"></i> Теория</a></li>
+          <li role="none"><a role="menuitem" href="dop.html"><i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i> Қосымша</a></li>
+          <li role="none"><a role="menuitem" href="keste.html"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i> Cабақ кестесі</a></li>
+    <li role="none"><a role="menuitem" href="journal.html"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i>Журнал</a></li>
+          <li role="none"><a href="https://docs.google.com/spreadsheets/d/1gsCUjFFA1EsXRXcgmnp5ZFW4BAkTVCfnuyVGnUvEEMU/edit?usp=sharing"><i class="fas fa-envelope"></i> Кері байланыс</a></li>
+  </nav>
+
+  <main>
+    <section class="lecture-block">
+      <h2 style="font-size: 18px;">
+  <li><b><i class="fas fa-check-circle" style="color: #2ecc71;"></i> ОН 3.4 Scratch программалау ортасында ойынды жобалау</b></li>
+        <p>Негізгі мақсаты — білім алушыларды визуалды программалау негіздерімен, атап айтқанда Scratch ортасында ойын және анимациялық жобаларды жасау дағдыларымен таныстыру.Scratch арқылы білім алушылаплогикалық ойлау, шығармашылық қабілет және алгоритмдік мәдениетті дамытады.  </p><button class="btn animated delay-3" onclick="startLearning()"><a href="Scratch.html"> <font color="white"><download>Толығырақ</button></i></a></font></p></h2>
+      </p>
+    </section>
+   <section class="lecture-block">
+      <h2 style="font-size: 18px;">
+  <li><b><i class="fas fa-check-circle" style="color: #2ecc71;"></i>ОН 2.2 Дербес компьютер құралдарының жұмыс жасау принципін, программалық қамсыздандыру қызметін жүзеге асыру</b></li>
+        <p>Білім алушыларға дербес компьютердің (ДК) құрылымы, жұмыс жасау принципі және оның программалық қамсыздандыруының (операциялық жүйе, қолданбалы және жүйелік бағдарламалар) қызметін меңгерту.
+Компьютердің аппараттық және программалық бөліктерін тиімді пайдалана отырып, олардың өзара байланысын түсіндіру.</p><button class="btn animated delay-3" onclick="startLearning()"><a href="komparh.html"><font color="white"><download>Толығырақ</button></i></a></font></p></h2>
+    </section>
+   <section class="lecture-block">
+      <h2 style="font-size: 18px;">
+  <li><b><i class="fas fa-check-circle" style="color: #2ecc71;"></i>ОН 2.1 Ақпараттық коммуникациялық технологиялар негіздерін меңгеру</b></li>
+        <p>Білім алушыларға ақпараттық-коммуникациялық технологиялардың (АКТ) негізгі ұғымдарын, олардың құрылымы мен жұмыс істеу принциптерін меңгерту,сондай-ақ заманауи цифрлық құралдарды, бағдарламалық қамтамасыз етуді және интернет ресурстарын тиімді пайдалану дағдыларын қалыптастыру.</p><button class="btn animated delay-3" onclick="startLearning()"><a href="akt.html"><font color="white"><download>Толығырақ</button></i></a></font></p></h2>     
+<section class="lecture-block">
+      <h2 style="font-size: 18px;">
+  <li><b><i class="fas fa-check-circle" style="color: #2ecc71;"></i>ОН 2.2 Ақпараттық-анықтамалық және интерактивті веб-порталдардың қызметтерін пайдалану</b></li>
+        <p>Білім алушыларды ақпараттық-анықтамалық және интерактивті веб-порталдардың құрылымы, қызметтері мен қолдану ерекшеліктерімен таныстыру; оларды практикалық түрде тиімді пайдалана білетін, деректерді іздеу-табу, өңдеу, қауіпсіз сақтау және онлайн-қызметтер арқылы интерактивті жұмыс жүргізу дағдыларына жеткізу.</p><button class="btn animated delay-3" onclick="startLearning()"><a href="vebportal.html"><font color="white"><download>Толығырақ</button></i></a></font></p></h2>    
+<section class="lecture-block">
+     <section class="lecture-block">
+      <h2 style="font-size: 18px;">
+  <li><b><i class="fas fa-check-circle" style="color: #2ecc71;"></i></i>Информатика</b></li>
+        <p> Білім алушыларға ақпараттық-коммуникациялық технологиялар негіздерін,ақпаратты өңдеу, сақтау және беру тәсілдерін,
+сондай-ақ программалау, алгоритмдеу және заманауи цифрлық құралдармен жұмыс істеу дағдыларын үйрету арқылы олардың цифрлық сауаттылығын, логикалық ойлауын және кәсіби құзыреттілігін дамыту.</p><button class="btn animated delay-3" onclick="startLearning()"><a href="Informatika.html"><font color="white"><download>Толығырақ  </button></i></a></font></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Абылаев Ж.Н</p>
+  </footer>
+</body>
+</html>

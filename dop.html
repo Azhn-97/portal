@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Электронды оқулық - Информатика</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+          --primary-color: #2c3e50;
+          --secondary-color: #3498db;
+          --accent-color: #e74c3c;
+          --light-color: #ecf0f1;
+          --dark-color: #2c3e50;
+        }
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          line-height: 1.6;
+          background-color: #f9f9f9;
+          color: #333;
+        }
+
+        header {
+          background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+          color: white;
+          padding: 2rem 0;
+          text-align: center;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+        }
+
+        nav {
+          background-color: var(--dark-color);
+          position: sticky;
+          top: 0;
+          z-index: 100;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 20px;
+        }
+
+        .logo {
+          color: white;
+          font-weight: bold;
+          font-size: 1.2rem;
+        }
+
+        .nav-links {
+          display: flex;
+          list-style: none;
+        }
+
+        .nav-links a {
+          color: white;
+          text-decoration: none;
+          padding: 1rem;
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+        }
+
+        .nav-links a:hover {
+          background-color: var(--secondary-color);
+          color: white;
+        }
+
+        .nav-links a i {
+          margin-right: 8px;
+        }
+
+        main {
+          max-width: 1200px;
+          margin: 2rem auto;
+          padding: 0 20px;
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        @media (min-width: 992px) {
+          main {
+            grid-template-columns: 3fr 1fr;
+          }
+        }
+
+        .content-section {
+          background: white;
+          border-radius: 8px;
+          padding: 2rem;
+          box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+          transition: transform 0.3s ease;
+        }
+
+        .content-section:hover {
+          transform: translateY(-5px);
+        }
+
+        .sidebar {
+          background: white;
+          border-radius: 8px;
+          padding: 1.5rem;
+          box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+          height: fit-content;
+          position: sticky;
+          top: 80px;
+        }
+
+        h1, h2, h3, h4 {
+          color: var(--primary-color);
+          margin-bottom: 1rem;
+        }
+
+        h1 {
+          font-size: 2.5rem;
+          margin-bottom: 0.5rem;
+        }
+
+        h2 {
+          font-size: 1.8rem;
+          border-bottom: 2px solid var(--secondary-color);
+          padding-bottom: 0.5rem;
+          margin-bottom: 1.5rem;
+        }
+
+        h3 {
+          font-size: 1.4rem;
+          color: var(--secondary-color);
+          margin-top: 1.5rem;
+        }
+
+        p {
+          margin-bottom: 1rem;
+        }
+
+        ul, ol {
+          margin-left: 1.5rem;
+          margin-bottom: 1rem;
+        }
+
+        li {
+          margin-bottom: 0.5rem;
+        }
+
+        a {
+          color: var(--secondary-color);
+          text-decoration: none;
+        }
+
+        a:hover {
+          color: var(--accent-color);
+          text-decoration: underline;
+        }
+
+        .btn {
+          display: inline-block;
+          background-color: var(--secondary-color);
+          color: white;
+          padding: 0.6rem 1.2rem;
+          border-radius: 4px;
+          border: none;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          font-size: 1rem;
+          margin-top: 0.5rem;
+        }
+
+        .btn:hover {
+          background-color: var(--primary-color);
+          transform: translateY(-2px);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+          text-decoration: none;
+        }
+
+        .btn-accent {
+          background-color: var(--accent-color);
+        }
+
+        .btn-accent:hover {
+          background-color: #c0392b;
+        }
+
+        .code-block {
+          background-color: #f5f5f5;
+          padding: 1rem;
+          border-radius: 4px;
+          font-family: 'Courier New', Courier, monospace;
+          margin: 1rem 0;
+          overflow-x: auto;
+        }
+
+        .card {
+          background: white;
+          border-radius: 8px;
+          padding: 1.5rem;
+          margin-bottom: 1.5rem;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+          transition: all 0.3s ease;
+        }
+
+        .card:hover {
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+          transform: translateY(-3px);
+        }
+
+        .card h3 {
+          margin-top: 0;
+        }
+
+        .topic-list {
+          list-style: none;
+        }
+
+        .topic-list li {
+          margin-bottom: 0.8rem;
+          padding-bottom: 0.8rem;
+          border-bottom: 1px solid #eee;
+        }
+
+        .topic-list li:last-child {
+          border-bottom: none;
+        }
+
+        .topic-list a {
+          display: flex;
+          align-items: center;
+          color: var(--dark-color);
+        }
+
+        .topic-list a:hover {
+          color: var(--secondary-color);
+        }
+
+        .topic-list i {
+          margin-right: 10px;
+          color: var(--secondary-color);
+        }
+
+        footer {
+          background-color: var(--dark-color);
+          color: white;
+          text-align: center;
+          padding: 2rem 0;
+          margin-top: 3rem;
+        }
+
+        .footer-content {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 20px;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 2rem;
+          text-align: left;
+        }
+
+        .footer-section h3 {
+          color: white;
+          margin-bottom: 1.5rem;
+          font-size: 1.2rem;
+        }
+
+        .footer-section ul {
+          list-style: none;
+        }
+
+        .footer-section ul li {
+          margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+          color: #bbb;
+        }
+
+        .footer-section a:hover {
+          color: white;
+        }
+
+        .social-links {
+          display: flex;
+          gap: 1rem;
+          margin-top: 1rem;
+        }
+
+        .social-links a {
+          color: white;
+          background-color: var(--secondary-color);
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+          background-color: var(--accent-color);
+          transform: translateY(-3px);
+        }
+
+        .copyright {
+          text-align: center;
+          padding-top: 2rem;
+          margin-top: 2rem;
+          border-top: 1px solid #444;
+          color: #bbb;
+          font-size: 0.9rem;
+        }
+
+        /* Адаптивтік дизайн */
+        @media (max-width: 768px) {
+          .nav-container {
+            flex-direction: column;
+            padding: 1rem;
+          }
+
+          .nav-links {
+            margin-top: 1rem;
+            width: 100%;
+            justify-content: space-around;
+          }
+
+          .nav-links a {
+            padding: 0.5rem;
+            font-size: 0.9rem;
+          }
+
+          h1 {
+            font-size: 2rem;
+          }
+
+          .content-section, .sidebar {
+            padding: 1.5rem;
+          }
+        }
+
+        /* Анимациялар */
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animated {
+          animation: fadeIn 0.6s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+
+        /* Прогресс бар */
+        .progress-container {
+          width: 100%;
+          background-color: #f1f1f1;
+          border-radius: 4px;
+          margin: 1rem 0;
+        }
+
+        .progress-bar {
+          height: 8px;
+          background-color: var(--secondary-color);
+          border-radius: 4px;
+          width: 0%;
+          transition: width 0.5s ease;
+        }
+
+        /* Модальды терезe */
+        .modal {
+          display: none;
+          position: fixed;
+          z-index: 1000;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0,0,0,0.7);
+          overflow: auto;
+        }
+
+        .modal-content {
+          background-color: white;
+          margin: 10% auto;
+          padding: 2rem;
+          border-radius: 8px;
+          width: 80%;
+          max-width: 600px;
+          box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+          position: relative;
+        }
+
+        .close-btn {
+          position: absolute;
+          top: 15px;
+          right: 15px;
+          font-size: 1.5rem;
+          cursor: pointer;
+          color: #777;
+        }
+
+        .close-btn:hover {
+          color: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+<header class="animated">
+    <div class="header-content">
+      <div style="text-align: right;">
+  <a href="index.html"><font color="white"><i class="fa-solid fa-right-from-bracket"></i>Шығу</button></i></a></font></p>
+  <div style="text-align: center;">
+        <h1>Информатика пәні бойынша электронды оқу порталы</h1>
+      <p> <b>Ақтөбе жоғары гуманитарлық колледжі</b></p>  
+  <div style="text-align: center;">
+  </div>
+</header>
+
+<nav>
+    <div class="nav-container">
+        <div class="logo">Қосымшалар бөлімі</div>
+        <ul class="nav-links">
+	    <li><a href="basy.html"><i class="fas fa-home"></i> Басты бет</a></li>
+            <li><a href="Mazmuny.html"><i class="fas fa-book"></i> Мазмұны</a></li>
+            <li><a href="Teoria.html"><i class="fas fa-book"></i> Теория</a></li>
+            <li><a href="dop.html"><i class="fa-solid fa-chalkboard-user"></i></i> Қосымша</a></li>
+      <li role="none"><a role="menuitem" href="keste.html"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i> Cабақ кестесі</a></li>
+       <li role="none"><a role="menuitem" href="journal.html"><i class="fa-solid fa-lightbulb" aria-hidden="true"></i>Журнал</a></li>
+      <li><a href="https://docs.google.com/spreadsheets/d/1gsCUjFFA1EsXRXcgmnp5ZFW4BAkTVCfnuyVGnUvEEMU/edit?usp=sharing"><i class="fas fa-envelope"></i> Кері байланыс</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+    <div class="content">
+        <section id="home" class="content-section animated">
+            <h2><p><b>Қосымша онлайн платформалар</p></b></h2>
+	<p><li> Қосымша онлайн платформаларды қолдану мүмкіндігі қарастырылды. Бұл платформалар білім беру үдерісін тиімді ұйымдастыруға, оқу материалдарын қолжетімді етуге және оқушылар мен мұғалімдер арасындағы өзара байланысты жақсартуға бағытталған. Аталған платформалар арқылы бейнесабақтар, интерактивті тапсырмалар, тесттер және кері байланыс жүйелері жүзеге асырылады. Сонымен қатар, бұл ресурстар қашықтан оқыту немесе аралас форматтағы сабақтарды жүргізу кезінде қолайлы. Қолданылатын нақты платформалар қатарына Google Classroom, Zoom, Microsoft Teams, Moodle және білім беру бағытындағы отандық жүйелер кіруі мүмкін. Мұндай платформаларды қолдану оқу үдерісінің сапасын арттыруға және цифрлық сауаттылықты дамытуға ықпал етеді.</p>
+<p>Қосымша онлайн платформалар қарастырылып, қолдануға ұсынылады. Атап айтқанда, бейнемонтаж, графикалық және веб-дизайн, 3D модельдеу, сондай-ақ бұлттық технологиялар салаларында білім мен дағдыларды дамытуға арналған заманауи цифрлық ресурстар кеңінен қолданылуда:
+            <div class="card animated delay-1">
+                    <ul>
+                   <li><i><b> 📽 Бейнемонтаж (видеомонтаж):</i></b> 
+		    <p>Adobe Premiere Pro – кәсіби видеомонтаж жасауға арналған ең танымал құрал.</p> 
+		    <p> Final Cut Pro – macOS жүйесіне арналған қуатты бейнемонтаж бағдарламасы.</p>
+		    <p> DaVinci Resolve – видеоны өңдеу мен түсті түзетуге арналған тегін әрі кәсіби бағдарлама.</p>
+		    <p> CapCut – жаңадан бастаушыларға ыңғайлы, онлайн/мобильді видеомонтаж құралы.</p> 
+                    <li><i><b>  🎨 Графикалық дизайн:</i> </b> 
+		    <p>Adobe Photoshop – суреттерді өңдеу мен графикалық дизайн үшін ең танымал бағдарлама.</p> 
+		    <p> Canva – постер, презентация, әлеуметтік желі контентін жасауға арналған қарапайым әрі ыңғайлы онлайн платформа.	</p> 
+		    <p> Figma – UI/UX дизайн жасауға арналған заманауи құрал.</p>
+		    <p> CorelDRAW – векторлық графикамен жұмыс істеуге арналған бағдарлама.</p>
+		    <li><i><b> 🌐 Веб-дизайн және веб-дамыту:</i> </b> 
+		    <p>Wix – веб-сайттарды оңай әрі тез жасауға мүмкіндік беретін платформа.</p>
+		    <p>WordPress – сайт жасаудың кең тараған және икемді жүйесі.</p>
+                    <p>Webflow – дизайн мен кодтауды біріктіретін заманауи веб-платформа.</p>
+		    <p>Bootstrap Studio – адаптивті веб-дизайн жасауға арналған визуалды құрал.</p>
+		    <li><i><b>  🧱 3D модельдеу:</i></b> 
+		    <p>Blender – тегін әрі кәсіби деңгейдегі 3D модельдеу, анимация және визуализация бағдарламасы.</p>
+		    <p>SketchUp – архитектура мен интерьер дизайны үшін қолданылатын 3D модельдеу құралы.</p>
+                    <p>Autodesk Maya – кино мен ойын индустриясында қолданылатын қуатты 3D бағдарлама.</p>
+                    <p>Tinkercad – жаңадан бастаушыларға арналған қарапайым 3D модельдеу онлайн-платформасы.</p>
+                </ul>
+            </div>
+
+            <div class="progress-container animated delay-2">
+            <div class="progress-bar" id="progress-bar"></div>
+            </div>
+ 	    <li><i><b>Қосымша онлайн платформалар:</i></b> 
+            <li><a href="https://learningapps.org/">learningapps интерактивті оқу-әдістемелік қосымшасы</a></li>
+	    <li><a href="https://www.canva.com/ru_ru//">Canva.com онлайн-құрал</a></li>
+	    <li><a href="https://xmind.ai/">Xmind онлайн тақтасы</a></li>
+            <li><a href="https://gamma.app/ru/">gamma.app презентациялар, веб-сайттар, AI-мен жұмыс істейтін дизайнерлік платформа.</a></li>
+	    <li><a href="https://padlet.com//">padlet.com онлайн сабақтарға арналған виртуалды тақта</a></li>
+            <li><a href="https://www.d-id.com//">D-ID – нақты уақыттағы бет-әлпет анимациясын пайдаланатын веб-бағдарлама.</a></li>
+            <li><a href="https://www.renderforest.com/ru/signin#Videos/">Renderforest - жан-жақты брендинг платформасы,</a></li>
+            <li><a href="https://scratch.mit.edu//">Scratch программалау ортасында ойынды жобалау бағдарламасының онлайн нұсқасы</a></li>
+            <li><a href="hhttps://klingai.com/global//">klingai.com Анимация,видео жасауға арналған платформа</a></li>
+            <li><a href="https://nanobanana.ai/generator/">nanobanana.ai Сурет,видео материалдарға өзгеріс енгізу,бейнетексеруге арналған ЖИ платформа</a></li>
+        </section>
+                        </ul>
+            </div>
+        </section>
+</script>
+</body>
+</html>

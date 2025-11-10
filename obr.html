@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Тапсырмалар</title>
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #eef3f7;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  max-width: 1100px;
+  margin: 40px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+h1 {
+  text-align: center;
+  color: #007bff;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+th, td {
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  text-align: center;
+}
+th {
+  background: #007bff;
+  color: white;
+}
+input, select, textarea, button {
+  padding: 8px;
+  margin: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+button {
+  background: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+button:hover {
+  background: #0056b3;
+}
+.task-card {
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 15px;
+  margin: 15px 0;
+  border-left: 5px solid #007bff;
+}
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.task-actions {
+  margin-top: 10px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <img src="logo.png" 
+     alt="Логотип" 
+     style="width:100px; display:block; margin:auto;">
+  <h1>📘 Тапсырмалар порталы</h1>
+  <div id="userInfo"></div>
+
+  <!-- Оқытушы тапсырма қосу -->
+  <div id="teacherTools" style="display:none;">
+    <h3>➕ Тапсырма қосу</h3>
+    <input id="task_title" placeholder="Тапсырма атауы"><br>
+    <textarea id="task_desc" placeholder="Сипаттамасы" rows="3" style="width:100%;"></textarea><br>
+    <select id="task_group">
+      <option value="">Топты таңдаңыз</option>
+      <option>Бк-220</option>
+      <option>Кт-205</option>
+      <option>МД-215</option>
+      <option>Ктх-215</option>
+      <option>И-205</option>
+      <option>Шт-206</option>
+      <option>Дт-205</option>
+      <option>И-215</option>
+      <option>И-220</option>
+      <option>Бк-221</option>
+      <option>Дт-207</option>
+      <option>Шт-205</option>
+      <option>Кт-220</option>
+    </select><br>
+    Соңғы мерзімі: <input type="date" id="task_deadline"><br>
+    Файл: <input type="file" id="task_file"><br>
+    <button onclick="addTask()">Қосу</button>
+    <hr>
+  </div>
+
+  <!-- Тапсырмалар тізімі -->
+  <div id="taskList"></div>
+</div>
+
+<script>
+const SESSION_KEY = 'portal_current_user_v1';
+const TASKS_KEY = 'portal_tasks_v1';
+const SUBMISSIONS_KEY = 'portal_submissions_v1';
+
+const me = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null');
+if(!me){ alert("Сіз жүйеге кірмегенсіз!"); window.location.href="index.html"; }
+
+document.getElementById('userInfo').innerHTML = `<b>${me.fullname}</b> — ${me.role}`;
+
+let tasks = JSON.parse(localStorage.getItem(TASKS_KEY) || '[]');
+let submissions = JSON.parse(localStorage.getItem(SUBMISSIONS_KEY) || '[]');
+
+if(me.role === 'teacher') {
+  document.getElementById('teacherTools').style.display = 'block';
+}
+
+function saveTasks() {
+  localStorage.setItem(TASKS_KEY, JSON.stringify(tasks));
+}
+function saveSubmissions() {
+  localStorage.setItem(SUBMISSIONS_KEY, JSON.stringify(submissions));
+}
+
+function addTask() {
+  const title = document.getElementById('task_title').value.trim();
+  const desc = document.getElementById('task_desc').value.trim();
+  const group = document.getElementById('task_group').value;
+  const deadline = document.getElementById('task_deadline').value;
+  const fileInput = document.getElementById('task_file');
+
+  if(!title || !desc || !group || !deadline) {
+    alert("Барлық өрістерді толтырыңыз!");
+    return;
+  }
+
+  let fileName = "";
+  if(fileInput.files.length > 0) {
+    fileName = fileInput.files[0].name;
+  }
+
+  tasks.push({
+    id: Date.now(),
+    title, desc, group, deadline,
+    teacher: me.fullname,
+    file: fileName
+  });
+  saveTasks();
+  renderTasks();
+  alert("Тапсырма қосылды!");
+}
+
+function renderTasks() {
+  const container = document.getElementById('taskList');
+  container.innerHTML = "";
+
+  let filteredTasks = tasks.filter(t => 
+    me.role === 'teacher' ? t.teacher === me.fullname : t.group === me.group
+  );
+
+  if(filteredTasks.length === 0) {
+    container.innerHTML = "<p>Тапсырмалар жоқ.</p>";
+    return;
+  }
+
+  filteredTasks.forEach(t => {
+    const div = document.createElement('div');
+    div.className = "task-card";
+    div.innerHTML = `
+      <div class="task-header">
+        <h3>${t.title}</h3>
+        <span>🧑‍🏫 ${t.teacher}</span>
+      </div>
+      <p>${t.desc}</p>
+      <small>Топ: <b>${t.group}</b> | Мерзім: <b>${t.deadline}</b></small><br>
+      ${t.file ? `<a href="#" download="${t.file}">📎 ${t.file}</a>` : ""}
+      <div class="task-actions">
+        ${me.role === 'student' ? `
+          <input type="file" id="file_${t.id}">
+          <button onclick="submitTask(${t.id})">Жіберу</button>
+        ` : `
+          <button onclick="viewSubmissions(${t.id})">Жіберілген жауаптар</button>
+        `}
+      </div>
+      <div id="subs_${t.id}" style="margin-top:10px;"></div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function submitTask(taskId) {
+  const input = document.getElementById(`file_${taskId}`);
+  if(input.files.length === 0) {
+    alert("Файл таңдаңыз!");
+    return;
+  }
+  const fileName = input.files[0].name;
+  submissions.push({
+    taskId,
+    student: me.fullname,
+    group: me.group,
+    teacher: tasks.find(t => t.id === taskId).teacher,
+    file: fileName,
+    date: new Date().toLocaleDateString()
+  });
+  saveSubmissions();
+  alert("Тапсырма жіберілді!");
+}
+
+function viewSubmissions(taskId) {
+  const listDiv = document.getElementById(`subs_${taskId}`);
+  const list = submissions.filter(s => s.taskId === taskId && s.teacher === me.fullname);
+  if(list.length === 0) {
+    listDiv.innerHTML = "<i>Жіберілген жауаптар жоқ.</i>";
+    return;
+  }
+  let html = "<table><tr><th>Білім алушы</th><th>Тобы</th><th>Файл</th><th>Күні</th></tr>";
+  list.forEach(s => {
+    html += `<tr><td>${s.student}</td><td>${s.group}</td><td><a href="#" download="${s.file}">${s.file}</a></td><td>${s.date}</td></tr>`;
+  });
+  html += "</table>";
+  listDiv.innerHTML = html;
+}
+
+renderTasks();
+</script>
+</body>
+</html>
